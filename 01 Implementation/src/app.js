@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { userAPI } from './api/userAPI';
-import { UserTable, LoadButton } from './components';
-import './app.css';
+import React, { Component } from "react";
+import { userAPI } from "./api/userAPI";
+import { UserTable, LoadButton } from "./components";
+import "./app.css";
+import { trackPromise } from "react-promise-tracker";
 
 export class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      users: [],
+      users: []
     };
 
     this.onLoadTables = this.onLoadTables.bind(this);
@@ -16,15 +17,16 @@ export class App extends Component {
 
   onLoadTables() {
     this.setState({
-      users: [],      
+      users: []
     });
 
-    userAPI.fetchUsers()
-      .then((users) => {
+    trackPromise(
+      userAPI.fetchUsers().then(users => {
         this.setState({
-          users,
-        })
-      });
+          users
+        });
+      })
+    );
   }
 
   render() {
@@ -35,7 +37,7 @@ export class App extends Component {
           title="Load user table with delay"
         />
         <div>
-          <UserTable users={this.state.users} />          
+          <UserTable users={this.state.users} />
         </div>
       </div>
     );
