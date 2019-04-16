@@ -21,9 +21,12 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { App } from './app';
 
-+ const InnerLoadingIndicator = props => (
-+   <h1>Hey some async call in progress ! </h1>
-+ );
+ 
++ const LoadingIndicator = props => {
++   return (
++    <h1>Hey some async call in progress ! </h1>
++  );  
++ }
 
 render(
   <div>
@@ -41,30 +44,22 @@ _./src/index_
 
 ```diff
 import React from 'react';
-+ import { promiseTrackerHoc } from 'react-promise-tracker';
++ import { usePromiseTracker } from "react-promise-tracker";
 ```
 
-And wrap our _spinner_ component with the _promiseTrackerHoc_
+Use the _react-promise-tracker_  _usePromiseTracker_ hook.
 
 _./src/index_
 
 ```diff
-const InnerLoadingIndicator = (props) => (
-  <h1>Hey some async call in progress ! </h1>
-);
+ const LoadingIndicator = props => {
++   const { promiseInProgress } = usePromiseTracker();
 
-+ const LoadingIndicator = promiseTrackerHoc(InnerLoadingIndicator);
-```
-
-- Our loadingIndicator component has now available a property called _trackedPromiseInProgress_, we can use it to show / hide the loading indicator depending on that flag value.
-
-_./src/index.ts_
-
-```diff
-const InnerLoadingIndicator = (props) => (
-+  props.trackedPromiseInProgress &&
-  <h1>Hey some async call in progress ! </h1>
-)
+   return (
++     promiseInProgress && 
+    <h1>Hey some async call in progress ! </h1>
+  );  
+ }
 ```
 
 - We can now instantiate this component at our application entry point level
@@ -142,9 +137,11 @@ import { App } from './app';
 _./src/index.js_
 
 ```diff
-const InnerLoadingIndicator = (props) => (
-  props.trackedPromiseInProgress &&
--  <h1>Hey some async call in progress ! </h1>
+const LoadingIndicator = props => {
+  const { promiseInProgress } = usePromiseTracker();
+
+  return promiseInProgress && 
+-        <h1>Hey some async call in progress ! </h1>;
 +    <div
 +      style={{
 +        width: "100%",
@@ -156,7 +153,7 @@ const InnerLoadingIndicator = (props) => (
 +    >
 +      <Loader type="ThreeDots" color="#2BAD60" height="100" width="100" />
 +    </div>
-)
+};
 ```
 
 - Now if we run the application we can see that we are getting a better looking loading indicator.
@@ -170,4 +167,4 @@ npm start
 https://github.com/Lemoncode/react-promise-tracker
 
 
-- Hope you enjoyed this video, thanks for watching
+

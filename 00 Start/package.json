@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "react": "16.5.0",
-    "react-dom": "16.5.0",
-    "prop-types": "15.6.2",
-    "react-loader-spinner": "2.1.0",
-    "react-promise-tracker": "1.1.0"
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "prop-types": "15.7.2",
+    "react-loader-spinner": "2.3.0",
+    "react-promise-tracker": "2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
